@@ -20,7 +20,7 @@ module.exports = (app) => {
   });
 
   router.get("/categories", async (req, res) => {
-    const model = await Category.find().limit();
+    const model = await Category.find().populate('parent');
     res.send(model);
   });
 
