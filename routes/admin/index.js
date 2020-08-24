@@ -4,7 +4,7 @@ module.exports = (app) => {
     mergeParams: true, //
   });
   router.post("/", async (req, res) => {
-    const model = await req.Model.create(req.body);
+    const model = await req.Model.create(req.body); // Shortcut for saving one or more documents to the database. MyModel.create(docs) does new MyModel(doc).save() for every doc in docs.
     res.send(model);
   });
 
@@ -24,6 +24,9 @@ module.exports = (app) => {
     const queryOption = {};
     if (req.Model.modelName === "Category") {
       queryOption.populate = "parent";
+    }
+    if (req.Model.modelName === 'Article') {
+      queryOption.populate = 'categories'
     }
     const model = await req.Model.find().setOptions(queryOption);
     res.send(model);
